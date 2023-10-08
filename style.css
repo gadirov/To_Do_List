@@ -74,14 +74,17 @@ p{
 
 }
 .newLis{
+    width: 20vw;
     font-size: 20px;
     text-align: center;
     
 }
 .newButton{
+    font-size: 20px;
     margin-right: 5px;
     cursor: pointer;
 }
 .newEditButton, .newSaveButton{
     cursor: pointer;
+    font-size: 20px;
 }
