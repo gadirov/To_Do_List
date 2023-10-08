@@ -1,0 +1,87 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+    background:#F1F1D4;
+}
+h1{
+    margin: 0;
+    text-align: center;
+    height: 10vh;
+    padding: 50px 0 0 0;
+    color: rgba(10,60,150, 0.8);
+    font-size: 60px;
+}
+p{
+    margin: 0;
+    text-align: center;
+    height: 10vh;
+    padding: 15px 0 0 0;
+    color: rgba(10,60,150, 0.8);
+    font-size: 20px;
+}
+.addSection{
+    text-align: center;
+    height: 10vh;
+    padding-top: 0px;
+}
+#unchecked{
+    margin-bottom: 20px;
+}
+#addInput{
+    height: 4vh;
+    width: 30vw;
+    font-size: 20px;
+}
+#addInput::placeholder{
+    font-size: 14px;
+}
+#addButton{
+    height: 5vh;
+    width: 5vw;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.mainSection{
+    background-color:cornflowerblue;
+    width: 36vw;
+    margin: 40px auto 40px auto;;
+    padding-bottom: 20px;
+    height: auto;
+}
+
+.mainSection h2{
+    background-color: rgb(95, 122, 145);
+    padding: 15px 0 15px 0;
+    text-align: center;
+    font-size: 30px;
+    margin: 0 auto;
+}
+
+#ulElement{
+    margin: 0;
+    padding: 0;
+}
+.newDiv{
+    background-color:aliceblue; 
+    display: flex;
+    justify-content: space-between;
+    list-style-type:none;
+    margin: 0;
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid black;
+
+}
+.newLis{
+    font-size: 20px;
+    text-align: center;
+    
+}
+.newButton{
+    margin-right: 5px;
+    cursor: pointer;
+}
+.newEditButton, .newSaveButton{
+    cursor: pointer;
+}
