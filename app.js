@@ -9,15 +9,13 @@ const unCheckedInput = document.querySelector("#unchecked");
 addButtonElement.addEventListener(("click"), addItemstoUlElement);
 document.addEventListener(("keyup"), (e) => {if(e.key === "Enter") addItemstoUlElement()});
 
-function addItemstoUlElement(){
-    if( addInputElement.value.trim() === ""){
-        alert("Please enter something!");
-    }
-    else{
-        //Create new Items
+document.addEventListener("DOMContentLoaded", () => {
+    fetchGetApi();
+})
+function addItemstoUlElement(data){
         const newDiv = document.createElement("div");
-        newDiv.className = "newDiv"
-
+        newDiv.className = "newDiv";
+        //Create new Items
         const checkTypeInput = document.createElement("input");
         checkTypeInput.type = "checkbox";
         checkTypeInput.className = "checkbox";
@@ -26,11 +24,12 @@ function addItemstoUlElement(){
         newLiInput.type = "text";
         newLiInput.className = "newLis";
         newLiInput.disabled=true;
-        newLiInput.value = addInputElement.value;
+        addInputElement.value.trim() === "" ? newLiInput.value = data.title : newLiInput.value = addInputElement.value;
 
         const newButton = document.createElement("button");
         newButton.innerText = "Delete";
         newButton.className = "newButton";
+        newButton.id = data.id;
 
         const newEditButton = document.createElement("button");
         newEditButton.innerText="Edit";
@@ -39,6 +38,7 @@ function addItemstoUlElement(){
         const newSaveButton = document.createElement("button");
         newSaveButton.innerText = "Save";
         newSaveButton.className = "newEditButton";
+        newSaveButton.id = data.id;
 
         //add elements
         ulElement.append(newDiv)
@@ -50,9 +50,19 @@ function addItemstoUlElement(){
         addInputElement.value = "";
 
         //deleteButton,EditButton,SaveButton - addeventListener
-        newButton.addEventListener(("click"), () => {ulElement.removeChild(newDiv) });
+        newButton.addEventListener(("click"), (e) => {
+            ulElement.removeChild(newDiv); 
+            let id = e.target.id;
+            fetchDeleteApi(id);
+        });
         newEditButton.addEventListener(("click"),() => {newLiInput.disabled=false;})
-        newSaveButton.addEventListener(("click"),() => {newLiInput.disabled=true;})
+        newSaveButton.addEventListener(("click"),(e) => {
+            newLiInput.disabled=true;
+            let id = e.target.id;
+            console.log(id)
+            let title = e.target.innerText;
+            fetchPutRequest(id,title);
+        })
 
         //Done - if checkbox selected
         const allCheckboxes = document.querySelectorAll(".checkbox");
@@ -111,7 +121,52 @@ function addItemstoUlElement(){
                     })
                 }
             })
+
+}
+
+//Get Request
+const fetchGetApi = async () => {
+    const url = "https://jsonplaceholder.typicode.com/todos";
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const sevenData = data.splice(0,7);
+        if(!response.ok){
+            throw new Error('Network response was not ok');
         }
+        else{
+            sevenData.map((data) => {
+                addItemstoUlElement(data);
+            })
+        }
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+const fetchDeleteApi = async (id) => {
+    fetch('https://jsonplaceholder.typicode.com/todos/'+ id, {
+        method: 'DELETE',
+    });
+}
+
+
+const fetchPutRequest = async (_id,_title) => {
+    await fetch('https://jsonplaceholder.typicode.com/todos/' +  _id, {
+    method: 'PUT',
+    body: JSON.stringify({
+        title: _title
+    }),
+    headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+    },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+
 }
 
 
